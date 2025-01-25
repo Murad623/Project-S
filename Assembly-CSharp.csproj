@@ -64,14 +64,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/Player/PlayerAnimationManager.cs" />
+    <Compile Include="Assets/Scripts/Monsters/Monster.cs" />
+    <Compile Include="Assets/Scripts/FieldOfView-main/FieldOfViewEditor.cs" />
     <Compile Include="Assets/Scripts/Player/Player.cs" />
     <Compile Include="Assets/Scripts/Base/LazyLoadManager.cs" />
+    <Compile Include="Assets/Scripts/FieldOfView-main/FieldOfView.cs" />
     <Compile Include="Assets/Scripts/Base/PoolManager.cs" />
     <Compile Include="Assets/Scripts/Player/PlayerMove.cs" />
+    <Compile Include="Assets/Scripts/Monsters/MonsterAnimationManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets/WizardPolyArt/Shader/PolyArtMaskTint.shader" />
-    <None Include="Assets/WizardPolyArt/SRP/HowToTestSRPs.txt" />
+    <None Include="Assets/Shader/PolyArtMaskTint.shader" />
+    <None Include="Assets/SRP/HowToTestSRPs.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

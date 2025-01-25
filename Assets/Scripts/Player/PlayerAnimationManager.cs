@@ -65,7 +65,6 @@ public class PlayerAnimationManager : LazyLoadManager<PlayerAnimationManager>
         !playerAnimator.GetCurrentAnimatorStateInfo(2).IsName("Attack02")){
             Player.Attack = 0;
             _checkAttack = false;
-            print("Attacks checked");
         }
         if (_checkAttack1 &&
         !playerAnimator.GetCurrentAnimatorStateInfo(2).IsName("Attack01")){
@@ -91,9 +90,12 @@ public class PlayerAnimationManager : LazyLoadManager<PlayerAnimationManager>
         if (Player.Get().Health > 0) playerAnimator.SetBool("Hit",true);
         else playerAnimator.SetBool("Die",true);
     }
-    private void Revive(){
-        playerAnimator.SetBool("Revive", true);
-        playerAnimator.SetBool("Dizzy", false);
+    private void Revive(int heal){
+        if(Player.Get().Health <= 0){
+            Player.Get().Health += heal;
+            playerAnimator.SetBool("Revive", true);
+            playerAnimator.SetBool("Dizzy", false);
+        }
     }
     private void Dizzy(){
         if(!playerAnimator.GetCurrentAnimatorStateInfo(3).IsName("Dizzy")){
