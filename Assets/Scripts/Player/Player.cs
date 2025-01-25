@@ -13,6 +13,7 @@ public class Player : LazyLoadManager<Player>
         set {
             if (value >= 0) _health = value;
             else _health = 0;
+            print($"Health: {_health}");
         }
     }
     private float _sTime = 0;
@@ -31,8 +32,9 @@ public class Player : LazyLoadManager<Player>
     public static int AttackCount{
         get { return _attackCount; }
         set { 
-            if(value <= 2 && value >= 0) _attackCount = value;
-            if(value == 0) Attack = value;
+            if(value <= 3 && value >= 0) _attackCount = value;
+            // if(value == 0) Attack = value;
+            Attack = value;
         }
     }
     private bool _defend = false;
@@ -42,15 +44,15 @@ public class Player : LazyLoadManager<Player>
     public static event Action<int> onAttack;
     public static event Action<bool> onDefend;
     public static event Action<int> onGetHit;
-    public static event Action onRevive;
+    public static event Action<int> onRevive;
     public static event Action onDizzy;
     private void Update() {
         // Attack
         if (Input.GetMouseButtonDown(0)){
             if (Time.time - _sTime <= _delay) Attack++;
             else Attack = 1;
-            _sTime = Time.time;
             AttackCount++;
+            _sTime = Time.time;
         }
         // Defend
         if (Input.GetMouseButtonDown(1)) onDefend?.Invoke(true);
@@ -79,8 +81,7 @@ public class Player : LazyLoadManager<Player>
         }
     }
     public void Revive(int heal){
-        Health += heal;
-        onRevive?.Invoke();
+        onRevive?.Invoke(heal);
     }
     public void Dizzy(){
         onDizzy?.Invoke();
