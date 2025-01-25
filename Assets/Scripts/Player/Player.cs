@@ -7,53 +7,82 @@ using UnityEngine.Rendering;
 
 public class Player : LazyLoadManager<Player>
 {
-    private long _sTime = 0;
-    private int _delay = 1;
-    private long _now = 0;
-    private bool _attack1 = false;
-    public bool Attack1{
-        get { return _attack1; }
+    private int _health = 100;
+    public int Health{
+        get { return _health; }
+        set {
+            if (value >= 0) _health = value;
+            else _health = 0;
+        }
     }
-    private bool _attack2 = false;
-    public bool Attack2{
-        get { return _attack2; }
+    private float _sTime = 0;
+    private float _delay = 0.5f;
+    private static int _attack = 0;
+    public static int Attack{
+        get { return _attack; }
+        set { 
+            if(value <= 3 && value >= 0){
+                _attack = value;
+                onAttack?.Invoke(_attack);
+            }
+        }
+    }
+    private static int _attackCount = 0;
+    public static int AttackCount{
+        get { return _attackCount; }
+        set { 
+            if(value <= 2 && value >= 0) _attackCount = value;
+            if(value == 0) Attack = value;
+        }
     }
     private bool _defend = false;
     public bool Defend {
         get { return _defend; }
     }
-    private float _speed;
-    public float Speed {
-        get { return _speed; }
-        set { _speed = value; }
-    }
-    private float _horizontal;
-    private float _vertical;
-    public static event Action<bool> onAttack;
+    public static event Action<int> onAttack;
     public static event Action<bool> onDefend;
+    public static event Action<int> onGetHit;
+    public static event Action onRevive;
+    public static event Action onDizzy;
     private void Update() {
-        if (Input.GetMouseButtonDown(0))
-        {
-            _now = (long)(Time.time-Time.time%1);
-            if (!_attack1){
-                _attack1 = true;
-                onAttack?.Invoke(true);
-            }
-            else{
-                _attack2 = true;
-                _attack1 = false;
-                onAttack?.Invoke(false);
-            }
+        // Attack
+        if (Input.GetMouseButtonDown(0)){
+            if (Time.time - _sTime <= _delay) Attack++;
+            else Attack = 1;
+            _sTime = Time.time;
+            AttackCount++;
         }
-        if (Input.GetMouseButtonDown(1))
-        {
-            onDefend?.Invoke(true);
+        // Defend
+        if (Input.GetMouseButtonDown(1)) onDefend?.Invoke(true);
+        if (Input.GetMouseButtonUp(1)) onDefend?.Invoke(false);
+
+        // if (_delay <= Time.time-Time.time%1 - _sTime) _sTime = (long)(Time.time-Time.time%1);
+
+        // damage test
+        if(Input.GetKeyDown(KeyCode.Q)){
+            GetHit(40);
+            Dizzy();
         }
-        if (Input.GetMouseButtonUp(1))
-        {
-            onDefend?.Invoke(false);
+        // revive test
+        if (Input.GetKeyDown(KeyCode.R)){
+            Revive(50);
         }
-        if (_delay <= Time.time-Time.time%1 - _sTime) _sTime = (long)(Time.time-Time.time%1);
-        if (_attack1) if (_delay <= Time.time-Time.time%1 - _now) _attack1 = false;
+        // dizzy test
+        if (Input.GetKeyDown(KeyCode.E)){
+            Dizzy();
+        }
+    }
+    public void GetHit(int damage){
+        if(Health > 0){
+            Health -= damage;
+            onGetHit?.Invoke(damage);
+        }
+    }
+    public void Revive(int heal){
+        Health += heal;
+        onRevive?.Invoke();
+    }
+    public void Dizzy(){
+        onDizzy?.Invoke();
     }
 }
