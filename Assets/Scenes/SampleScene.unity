@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 57851811}
   - component: {fileID: 57851810}
   - component: {fileID: 57851809}
+  - component: {fileID: 57851813}
   m_Layer: 7
   m_Name: Wall
   m_TagString: Untagged
@@ -227,6 +228,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!222 &57851813
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57851808}
+  m_CullTransparentMesh: 1
 --- !u!1 &386545599
 GameObject:
   m_ObjectHideFlags: 3
@@ -725,6 +734,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4062256567536430511, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
+      propertyPath: angle
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 7153141402127884706, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
       propertyPath: m_Name
       value: SlimePolyart
@@ -896,7 +909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1886546362
 MonoBehaviour:
   m_ObjectHideFlags: 0
