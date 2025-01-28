@@ -6,6 +6,10 @@ using UnityEngine;
 public class MonsterAnimationManager : MonoBehaviour
 {
     private Animator _monsterAnimator;
+    public Animator MonsterAnimator{
+        get { return _monsterAnimator; }
+    }
+    private FieldOfView _fov;
     private bool _checkSenseSomething = false;
     private bool _checkSenseSomethingST = false;
     public bool CheckSenseSomethingST {
@@ -20,23 +24,23 @@ public class MonsterAnimationManager : MonoBehaviour
         GetComponent<Monster>().onSenseSomethingST += SenseSomethingST;
         GetComponent<Monster>().onSenseSomethingRPT += SenseSomethingRPT;
         _monsterAnimator = GetComponent<Animator>();
+        _fov = GetComponent<FieldOfView>();
     }
     private void Update() {
         if(_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingST")){
-            // _checkSenseSomething = true;
+            _checkSenseSomething = true;
             _checkSenseSomethingST = true;
         }
         if(_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingRPT")){
-            // _checkSenseSomething = true;
+            _checkSenseSomething = true;
             _checkSenseSomethingRPT = true;
         }
-        // if (_checkSenseSomething &&
-        // !_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingST") &&
-        // !_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingRPT")){
-        //     _checkSenseSomething = false;
-        //     _checkSenseSomethingST = false;
-        //     _checkSenseSomethingRPT = false;
-        // }
+        if (_checkSenseSomething &&
+        !_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingST") &&
+        !_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingRPT")){
+            _checkSenseSomething = false;
+            _fov.angle = 120;
+        }
         if (_checkSenseSomethingST &&
         !_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingST")){
             _monsterAnimator.SetBool("SenseSomethingST",false);
@@ -49,7 +53,7 @@ public class MonsterAnimationManager : MonoBehaviour
         }
     }
     private void CanSee(bool canSeePlayer){
-        _monsterAnimator.SetBool("Attack",canSeePlayer);
+        // _monsterAnimator.SetBool("Attack",canSeePlayer);
     }
     private void SenseSomethingST(bool SenseSomething){
         _monsterAnimator.SetBool("SenseSomethingST",SenseSomething);
