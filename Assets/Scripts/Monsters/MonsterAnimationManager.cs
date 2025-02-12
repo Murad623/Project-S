@@ -48,7 +48,7 @@ public class MonsterAnimationManager : MonoBehaviour
         }
         if (_checkSenseSomethingRPT &&
         !_monsterAnimator.GetCurrentAnimatorStateInfo(2).IsName("SenseSomethingRPT")){
-            _monsterAnimator.SetBool("SenseSomethingRPT",false);
+            // _monsterAnimator.SetBool("SenseSomethingRPT",false);
             _checkSenseSomethingRPT = false;
         }
     }
@@ -56,14 +56,14 @@ public class MonsterAnimationManager : MonoBehaviour
         // _monsterAnimator.SetBool("Attack",canSeePlayer);
     }
     private void SenseSomethingST(bool SenseSomething){
-        _monsterAnimator.SetBool("SenseSomethingST",SenseSomething);
+        // _monsterAnimator.SetBool("SenseSomethingST",SenseSomething);
     }
     private void SenseSomethingRPT(bool SenseSomething){
-        _monsterAnimator.SetBool("SenseSomethingRPT",SenseSomething);
+        // _monsterAnimator.SetBool("SenseSomethingRPT",SenseSomething);
     }
     private void OnDisable() {
         GetComponent<FieldOfView>().onCanSee -= CanSee;
         GetComponent<Monster>().onSenseSomethingST -= SenseSomethingST;
-        GetComponent<Monster>().onSenseSomethingRPT += SenseSomethingRPT;
+        GetComponent<Monster>().onSenseSomethingRPT -= SenseSomethingRPT;
     }
 }

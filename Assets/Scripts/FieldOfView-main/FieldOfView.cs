@@ -16,11 +16,9 @@ public class FieldOfView : MonoBehaviour
     {
         StartCoroutine(FOVRoutine());
     }
-
     private IEnumerator FOVRoutine()
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
-
         while (true)
         {
             yield return wait;
@@ -28,7 +26,6 @@ public class FieldOfView : MonoBehaviour
             onCanSee?.Invoke(canSeePlayer);
         }
     }
-
     private void FieldOfViewCheck()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);

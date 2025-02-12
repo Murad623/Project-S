@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerMove : LazyLoadManager<PlayerMove>
 {
-    private CharacterController _charControler;
+    // private CharacterController _charControler;
     private float _sTime = 0;
     private float _delay = 0.5f;
     // private bool _checkDoubleClick = true; // Double click state checker to alternative double click model
@@ -26,7 +26,7 @@ public class PlayerMove : LazyLoadManager<PlayerMove>
         Player.onDizzy += onDizzy;
     }
     private void Start(){
-        _charControler = GetComponent<CharacterController>();
+        // _charControler = GetComponent<CharacterController>();
     }
     private void Update(){
         if(canMove && Player.Get().Health > 0){
@@ -65,7 +65,8 @@ public class PlayerMove : LazyLoadManager<PlayerMove>
                 transform.rotation = Quaternion.Euler(0,effectiveAngel,0);
             }
             effectiveDirection = Vector3.Lerp(effectiveDirection, inputDirection, _directionSmooth);
-            _charControler.Move(effectiveDirection * Speed * Time.deltaTime);
+            // _charControler.Move(effectiveDirection * Speed * Time.deltaTime);
+            transform.position += effectiveDirection * Speed * Time.deltaTime;
             onMoveAnim?.Invoke(_speed);
         }
     }
